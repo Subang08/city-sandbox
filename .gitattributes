@@ -1,0 +1,25 @@
+# Normalize line endings so the same commit works on Windows, macOS and Linux.
+# Without this, Git on Windows rewrites LF to CRLF on checkout and every diff
+# shows spurious line-ending churn.
+* text=auto eol=lf
+
+# Windows launcher must keep CRLF or cmd.exe can misparse it.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Binary assets: never touch.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.glb binary
+*.gltf binary
+*.hdr binary
+*.woff binary
+*.woff2 binary
+
+# Vendored build output: keep it out of diffs and language stats.
+public/vendor/** linguist-vendored
+package-lock.json linguist-generated

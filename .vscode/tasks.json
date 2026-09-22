@@ -1,0 +1,54 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "start-server",
+      "detail": "启动零依赖静态服务器 (http://127.0.0.1:5173/)",
+      "type": "shell",
+      "command": "node",
+      "args": ["tools/server.mjs", "--port", "5173"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": [{ "regexp": "^$" }],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "city-sandbox serving",
+          "endsPattern": "http://"
+        }
+      },
+      "presentation": { "panel": "dedicated", "reveal": "always", "clear": true },
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "sim-check",
+      "detail": "无头自检：38 项断言覆盖楼层生长/塔吊循环/工人状态机/昼夜/天气/镜头",
+      "type": "shell",
+      "command": "node",
+      "args": ["tools/simtest.mjs", "--seconds", "180", "--assert"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "panel": "dedicated", "reveal": "always", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "capture-render",
+      "detail": "渲染到 RenderTarget 并读回像素，输出截图与亮度统计",
+      "type": "shell",
+      "command": "node",
+      "args": ["tools/render-target-capture.mjs", "--day", "12", "--minute", "660", "--out", ".verify/vscode-capture.png"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "panel": "dedicated", "reveal": "always", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "validate-all",
+      "detail": "语法 + 编码 + 配置 + 自检 全套校验",
+      "type": "shell",
+      "command": "node",
+      "args": ["tools/validate.mjs"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "panel": "dedicated", "reveal": "always", "clear": true },
+      "problemMatcher": []
+    }
+  ]
+}

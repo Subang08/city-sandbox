@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<!-- Inline icon so the page never triggers a favicon 404. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1a26'/%3E%3Cpath d='M8 24V12h16v12' fill='none' stroke='%234fd2e8' stroke-width='2'/%3E%3Cpath d='M6 24h20M12 12V7h8v5' fill='none' stroke='%23ffb347' stroke-width='2'/%3E%3C/svg%3E" />
+<title>河畔塔楼 · 微缩城市施工沙盘 | Riverside Tower Construction Diorama</title>
+<link rel="stylesheet" href="./styles/ui.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "./public/vendor/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="viewport"></canvas>
+
+<div id="boot">
+  <div class="boot-card">
+    <div class="boot-title">河畔塔楼 · 施工沙盘</div>
+    <div class="boot-sub">Riverside Tower · Construction Diorama · Three.js Vertical Slice</div>
+    <div class="boot-steps" id="boot-steps"></div>
+    <div class="boot-bar"><span></span></div>
+    <div class="boot-hint">正在生成程序化占位模型（塔吊 / 工人 / 车辆 / 道具）。GLB 资产接口已预留，可直接替换。</div>
+  </div>
+</div>
+
+<div id="ui-root"></div>
+
+<!--
+  file:// guard. This MUST be an inline classic script: under file:// the browser
+  blocks ES modules (origin "null") so src/app.js never runs, and any guidance
+  placed inside it would never execute. An inline script has no CORS restriction.
+-->
+<script>
+(function () {
+  if (window.location.protocol !== 'file:') return;
+  var card = document.querySelector('#boot .boot-card');
+  if (!card) return;
+  var hint = card.querySelector('.boot-hint');
+  if (hint) hint.remove();
+  var box = document.createElement('div');
+  box.className = 'boot-error';
+  box.textContent = [
+    '检测到以 file:// 协议打开本页面。',
+    '浏览器会以 CORS 策略阻止 ES 模块加载（origin 为 null），因此应用无法启动 —— 这与代码无关，是协议限制。',
+    '',
+    '请改用本地服务器运行，任选一种：',
+    '',
+    '  1) VS Code：右键 index.html → Open with Live Server',
+    '  2) VS Code：点击右下角状态栏的 Go Live',
+    '  3) 双击项目根目录的 start-server.cmd',
+    '  4) 命令行：npm start   然后访问 http://127.0.0.1:5173/',
+    '',
+    '说明：本项目使用 ES 模块 + fetch 读取 config/*.json，两者都要求 http(s) 协议。',
+  ].join('\n');
+  card.appendChild(box);
+  var bar = document.querySelector('#boot .boot-bar');
+  if (bar) bar.style.display = 'none';
+})();
+</script>
+
+<script type="module" src="./src/app.js"></script>
+</body>
+</html>

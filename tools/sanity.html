@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>webgl sanity</title>
+<style>html,body{margin:0;height:100%;background:#000}canvas{display:block;width:100%;height:100%}</style>
+<script type="importmap">
+{ "imports": { "three": "../public/vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="module">
+import * as THREE from 'three';
+
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: true });
+renderer.setPixelRatio(1);
+renderer.setSize(window.innerWidth, window.innerHeight, false);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x88bbee);
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(3, 2.4, 4);
+camera.lookAt(0, 0.5, 0);
+
+scene.add(new THREE.HemisphereLight(0xcfe4ff, 0x554433, 1.2));
+const sun = new THREE.DirectionalLight(0xffffff, 2.4);
+sun.position.set(4, 7, 3);
+scene.add(sun);
+
+// 1. plain mesh
+const plain = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.4, 1.4), new THREE.MeshStandardMaterial({ color: 0xff8844, roughness: 0.7 }));
+plain.position.set(-1.6, 0.7, 0);
+scene.add(plain);
+
+// 2. vertex-coloured merged mesh (same path as the static world)
+const merged = new THREE.Mesh(
+  new THREE.BoxGeometry(1.4, 1.4, 1.4).toNonIndexed(),
+  new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.8 }),
+);
+{
+  const count = merged.geometry.attributes.position.count;
+  const colors = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) { colors[i * 3] = 0.2; colors[i * 3 + 1] = 0.8; colors[i * 3 + 2] = 0.4; }
+  merged.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+}
+merged.position.set(0, 0.7, 0);
+scene.add(merged);
+
+// 3. instanced mesh with per-instance colour (same path as the building)
+const instanced = new THREE.InstancedMesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.85 }),
+  3,
+);
+{
+  const matrix = new THREE.Matrix4();
+  const color = new THREE.Color();
+  for (let i = 0; i < 3; i++) {
+    matrix.compose(
+      new THREE.Vector3(1.6, 0.5 + i * 0.9, 0),
+      new THREE.Quaternion(),
+      new THREE.Vector3(1.2, 0.7, 1.2),
+    );
+    instanced.setMatrixAt(i, matrix);
+    instanced.setColorAt(i, color.set(i === 0 ? '#ff3355' : i === 1 ? '#33ff88' : '#3388ff'));
+  }
+  instanced.instanceMatrix.needsUpdate = true;
+  if (instanced.instanceColor) instanced.instanceColor.needsUpdate = true;
+}
+scene.add(instanced);
+
+// 4. custom ShaderMaterial (same shape as the sky dome)
+const shaderMesh = new THREE.Mesh(
+  new THREE.PlaneGeometry(2, 2),
+  new THREE.ShaderMaterial({
+    vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+    fragmentShader: 'uniform vec3 uColor; varying vec2 vUv; void main(){ gl_FragColor = vec4(uColor * (0.6 + 0.4 * vUv.y), 1.0); #include <colorspace_fragment> }',
+    uniforms: { uColor: { value: new THREE.Color(0xffdd44) } },
+    side: THREE.DoubleSide,
+  }),
+);
+shaderMesh.position.set(0, 2.6, -2.5);
+scene.add(shaderMesh);
+
+// 5. shadows enabled (same as the world)
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+sun.castShadow = true;
+sun.shadow.mapSize.set(1024, 1024);
+sun.shadow.camera.left = -6; sun.shadow.camera.right = 6;
+sun.shadow.camera.top = 6; sun.shadow.camera.bottom = -6;
+sun.shadow.camera.near = 1; sun.shadow.camera.far = 30;
+plain.castShadow = true;
+instanced.castShadow = true;
+
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(14, 14).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 1 }));
+ground.receiveShadow = true;
+scene.add(ground);
+
+window.__SANITY__ = { renderer, scene, camera };
+
+// Probe INSIDE the frame: the default framebuffer is only readable before the
+// browser composites and clears it, which is why external readPixels returns zeros.
+const probe = { samples: [], frame: 0 };
+function readPixel(gl, fx, fy) {
+  const pixel = new Uint8Array(4);
+  gl.readPixels(
+    Math.floor(gl.drawingBufferWidth * fx),
+    Math.floor(gl.drawingBufferHeight * fy),
+    1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel,
+  );
+  return [pixel[0], pixel[1], pixel[2]];
+}
+
+function frame() {
+  requestAnimationFrame(frame);
+  renderer.render(scene, camera);
+  probe.frame++;
+  if (probe.frame === 3 || probe.frame === 30) {
+    const gl = renderer.getContext();
+    probe.samples.push({
+      frame: probe.frame,
+      glVersion: renderer.capabilities.isWebGL2 ? 2 : 1,
+      renderer: gl.getParameter(gl.RENDERER),
+      vendor: gl.getParameter(gl.VENDOR),
+      error: gl.getError(),
+      calls: renderer.info.render.calls,
+      triangles: renderer.info.render.triangles,
+      leftMesh: readPixel(gl, 0.28, 0.42),
+      centre: readPixel(gl, 0.5, 0.45),
+      rightMesh: readPixel(gl, 0.62, 0.45),
+      sky: readPixel(gl, 0.5, 0.92),
+      ground: readPixel(gl, 0.5, 0.12),
+    });
+    window.__SANITY_PROBE__ = probe;
+  }
+}
+frame();
+</script>
+</body>
+</html>

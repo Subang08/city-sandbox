@@ -1,0 +1,82 @@
+{
+  "clear": {
+    "label": "晴 Clear",
+    "coverage": 0.06,
+    "fog": { "near": 90, "far": 320, "color": "#cfe0ee" },
+    "sky": { "zenith": "#4f8fd4", "horizon": "#dbeaf3" },
+    "sun": { "intensity": 3.1, "color": "#fff4dc" },
+    "hemi": { "intensity": 0.5 },
+    "wind": { "speed": 1.6, "gust": 0.6, "direction": 0.9 },
+    "precipitation": "none",
+    "wetness": 0.0,
+    "snowCover": 0.0,
+    "exposure": 1.02,
+    "clouds": 0.25,
+    "puddle": 0.0
+  },
+  "overcast": {
+    "label": "阴 Overcast",
+    "coverage": 0.85,
+    "fog": { "near": 70, "far": 250, "color": "#b9c3cc" },
+    "sky": { "zenith": "#8f9aa6", "horizon": "#c3ccd4" },
+    "sun": { "intensity": 1.15, "color": "#e8eaf0" },
+    "hemi": { "intensity": 0.75 },
+    "wind": { "speed": 3.2, "gust": 1.1, "direction": 1.4 },
+    "precipitation": "none",
+    "wetness": 0.15,
+    "snowCover": 0.0,
+    "exposure": 0.96,
+    "clouds": 0.9,
+    "puddle": 0.05
+  },
+  "rain": {
+    "label": "雨 Rain",
+    "coverage": 0.95,
+    "fog": { "near": 45, "far": 165, "color": "#8d9aa6" },
+    "sky": { "zenith": "#5c6a78", "horizon": "#95a2ad" },
+    "sun": { "intensity": 0.7, "color": "#d8dee6" },
+    "hemi": { "intensity": 0.65 },
+    "wind": { "speed": 5.4, "gust": 1.8, "direction": 2.1 },
+    "precipitation": "rain",
+    "wetness": 1.0,
+    "snowCover": 0.0,
+    "exposure": 0.9,
+    "clouds": 1.0,
+    "puddle": 1.0
+  },
+  "snow": {
+    "label": "大雪 Snow",
+    "coverage": 0.92,
+    "fog": { "near": 40, "far": 150, "color": "#c9d3dc" },
+    "sky": { "zenith": "#93a3b4", "horizon": "#d7dee6" },
+    "sun": { "intensity": 0.95, "color": "#e9eef6" },
+    "hemi": { "intensity": 0.9 },
+    "wind": { "speed": 3.8, "gust": 1.4, "direction": 1.1 },
+    "precipitation": "snow",
+    "wetness": 0.2,
+    "snowCover": 1.0,
+    "exposure": 1.06,
+    "clouds": 0.95,
+    "puddle": 0.0
+  },
+  "fog": {
+    "label": "雾 Fog",
+    "coverage": 0.7,
+    "fog": { "near": 18, "far": 110, "color": "#c2c8cd" },
+    "sky": { "zenith": "#a9b2ba", "horizon": "#ccd2d7" },
+    "sun": { "intensity": 0.85, "color": "#e6e9ec" },
+    "hemi": { "intensity": 0.8 },
+    "wind": { "speed": 0.8, "gust": 0.3, "direction": 0.4 },
+    "precipitation": "none",
+    "wetness": 0.3,
+    "snowCover": 0.0,
+    "exposure": 0.94,
+    "clouds": 0.6,
+    "puddle": 0.1
+  },
+  "transitions": {
+    "durationSeconds": 6.0,
+    "wetnessDryRate": 0.08,
+    "snowMeltRate": 0.05
+  }
+}

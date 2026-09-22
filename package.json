@@ -1,0 +1,21 @@
+{
+  "name": "city-sandbox",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Miniature construction-site diorama sandbox built with Three.js (vertical slice).",
+  "scripts": {
+    "start": "node tools/server.mjs",
+    "dev": "node tools/live-server.mjs --port 5500",
+    "live": "node tools/live-server.mjs --port 5500",
+    "sim": "node tools/simtest.mjs",
+    "check": "node tools/simtest.mjs --frames 240 --assert",
+    "validate": "node tools/validate.mjs",
+    "verify-data": "node tools/verify-data.mjs",
+    "test-reload": "node tools/test-livereload.mjs",
+    "vendor": "node tools/vendor.mjs"
+  },
+  "dependencies": {
+    "three": "^0.169.0"
+  }
+}

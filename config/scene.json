@@ -1,0 +1,368 @@
+{
+  "meta": {
+    "name": "Riverside Tower - Construction Diorama",
+    "version": "1.0.0",
+    "units": "meters",
+    "description": "Data-driven scene graph for the miniature construction sandbox vertical slice."
+  },
+  "seed": "riverside-tower-v1",
+  "world": {
+    "ground": { "width": 80, "depth": 60 },
+    "table": { "width": 118, "depth": 92, "thickness": 1.2 },
+    "blueprint": { "width": 104, "depth": 78, "thickness": 0.18 },
+    "camera": {
+      "fov": 34,
+      "near": 0.4,
+      "far": 600,
+      "start": { "theta": 0.72, "phi": 0.78, "radius": 116, "target": [6, 7, 4] }
+    }
+  },
+  "enclosure": {
+    "fence": {
+      "rect": { "minX": -38, "maxX": 38, "minZ": -28, "maxZ": 28 },
+      "height": 2.4,
+      "panel": 3.0,
+      "gate": { "center": [0, 30.6], "width": 8.0 },
+      "colors": ["#2f6f8f", "#c2603a", "#4d7f3f", "#8a8f96"]
+    }
+  },
+  "roads": [
+    {
+      "id": "ring",
+      "closed": true,
+      "width": 7.0,
+      "points": [
+        [0, 34.5], [26, 33.5], [40, 24], [43, 6], [41, -14],
+        [28, -29], [0, -33], [-28, -29], [-41, -14], [-43, 6],
+        [-40, 24], [-26, 33.5]
+      ]
+    },
+    {
+      "id": "gate-approach",
+      "closed": false,
+      "width": 6.0,
+      "points": [[0, 33.5], [0, 30.5], [0, 24], [0, 17]]
+    }
+  ],
+  "parking": {
+    "lot": { "center": [-27, 17.5], "size": [16, 11], "rotation": 0.0 },
+    "stalls": 6,
+    "cars": 2,
+    "roadLink": "ring"
+  },
+  "laydown": {
+    "concreteWash": [22, -19],
+    "rebarYard": { "center": [29, -6], "size": [13, 12] },
+    "materialYard": { "center": [-28.5, -7], "size": [12, 17] }
+  },
+  "site": {
+    "slab": { "minX": -38, "maxX": 38, "minZ": -28, "maxZ": 28 },
+    "excavation": { "center": [0, -2], "size": [38, 26], "depth": 1.35 },
+    "stockpiles": [
+      { "type": "sand", "position": [-15.5, -22.0], "size": [6.5, 2.2, 4.2], "rotation": 0.25 },
+      { "type": "gravel", "position": [17.5, -22.5], "size": [7.0, 2.4, 4.5], "rotation": -0.18 }
+    ]
+  },
+  "buildings": [
+    {
+      "id": "tower-main",
+      "role": "main",
+      "position": [0, 0, -2],
+      "size": [20, 14],
+      "rotation": 0,
+      "floorHeight": 3.5,
+      "floors": { "existing": 3, "target": 12, "coreAhead": 1 },
+      "grid": { "baysX": 4, "baysZ": 3, "column": 0.7, "slabThickness": 0.32, "wallThickness": 0.35 },
+      "style": "office",
+      "palette": {
+        "structure": "#b9b4a9",
+        "slab": "#a8a49b",
+        "core": "#9c9890",
+        "wall": "#cfc7b6",
+        "window": "#3d5566",
+        "windowLit": "#ffd9a0",
+        "roof": "#8d8a84",
+        "formwork": "#a9763f",
+        "rebar": "#8a5a34"
+      },
+      "crane": "crane-a"
+    },
+    {
+      "id": "annex-podium",
+      "role": "podium",
+      "position": [-19.5, 0, 3.5],
+      "size": [13, 9],
+      "rotation": 0,
+      "floorHeight": 4.0,
+      "floors": { "existing": 2, "target": 2, "coreAhead": 0 },
+      "grid": { "baysX": 3, "baysZ": 2, "column": 0.6, "slabThickness": 0.3, "wallThickness": 0.35 },
+      "style": "podium",
+      "palette": {
+        "structure": "#b3ada2",
+        "slab": "#a49f96",
+        "core": "#9a958d",
+        "wall": "#c6bfae",
+        "window": "#37505f",
+        "windowLit": "#ffcf94",
+        "roof": "#87847e",
+        "formwork": "#a9763f",
+        "rebar": "#8a5a34"
+      }
+    }
+  ],
+  "cranes": [
+    {
+      "id": "crane-a",
+      "position": [-16.5, 0, -14.5],
+      "mastHeight": 44,
+      "jibLength": 30,
+      "counterJib": 11,
+      "maxLoad": 6.0,
+      "baseHeight": 1.6,
+      "restSlew": 0.85,
+      "restTrolley": 0.42
+    },
+    {
+      "id": "crane-b",
+      "position": [19.5, 0, 12.5],
+      "mastHeight": 30,
+      "jibLength": 22,
+      "counterJib": 8.5,
+      "maxLoad": 3.2,
+      "baseHeight": 1.4,
+      "restSlew": 2.35,
+      "restTrolley": 0.55
+    }
+  ],
+  "lighting": {
+    "sun": { "azimuthOffset": 0.35, "maxElevation": 0.82, "shadowSize": 72, "shadowMap": 2048 },
+    "moon": { "intensity": 0.28, "color": "#9fb6e0" },
+    "hemisphere": { "skyColor": "#bcd7ee", "groundColor": "#6b6152", "intensity": 0.55 },
+    "ambient": { "color": "#2c3550", "nightIntensity": 0.35, "dayIntensity": 0.1 },
+    "workLamps": { "count": 6, "intensity": 42, "distance": 26, "color": "#ffd79a" },
+    "streetLights": { "onThreshold": 0.12, "color": "#ffca7a" }
+  },
+  "time": {
+    "startDay": 6.0,
+    "startMinute": 500,
+    "minutesPerSecond": 1,
+    "speedPresets": [0.5, 1, 2, 5, 10, 20],
+    "timeline": { "from": 1, "to": 16 }
+  },
+  "weather": {
+    "default": "clear",
+    "presets": ["clear", "overcast", "rain", "snow", "fog"],
+    "cycle": { "enabled": false, "dwellDays": 1.5 }
+  },
+  "construction": {
+    "timeline": { "from": 1, "to": 16 },
+    "trades": [
+      { "id": "excavation", "label": "土方开挖", "start": 1.0, "end": 2.6 },
+      { "id": "foundation", "label": "基础底板", "start": 1.6, "end": 4.2 },
+      { "id": "core", "label": "主体结构", "start": 1.9, "end": 12.6 },
+      { "id": "facade", "label": "外墙砌筑", "start": 2.5, "end": 14.4 },
+      { "id": "glazing", "label": "玻璃幕墙", "start": 6.0, "end": 15.4 },
+      { "id": "roofing", "label": "屋面工程", "start": 12.0, "end": 16.0 },
+      { "id": "fitout", "label": "室内机电", "start": 7.5, "end": 15.6 },
+      { "id": "cleanup", "label": "场地清理", "start": 13.0, "end": 16.0 }
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "mixer-1",
+      "kind": "mixer",
+      "route": "yard-loop",
+      "direction": 1,
+      "speed": 3.4,
+      "startT": 0.05,
+      "stops": [{ "t": 0.30, "duration": 11, "task": "pour" }]
+    },
+    {
+      "id": "mixer-2",
+      "kind": "mixer",
+      "route": "ring",
+      "lane": "inner",
+      "direction": 1,
+      "speed": 5.2,
+      "startT": 0.62,
+      "cargo": "concrete",
+      "stops": [{ "t": 0.5, "duration": 9, "task": "unload" }]
+    },
+    {
+      "id": "tipper-1",
+      "kind": "tipper",
+      "route": "ring",
+      "lane": "inner",
+      "direction": 1,
+      "speed": 5.8,
+      "startT": 0.22,
+      "cargo": "aggregate",
+      "stops": [{ "t": 0.86, "duration": 8, "task": "tip" }]
+    },
+    {
+      "id": "forklift-1",
+      "kind": "forklift",
+      "route": "yard-loop",
+      "direction": 1,
+      "speed": 2.0,
+      "startT": 0.55,
+      "stops": [
+        { "t": 0.18, "duration": 7, "task": "lift" },
+        { "t": 0.78, "duration": 6, "task": "drop" }
+      ]
+    },
+    {
+      "id": "excavator-1",
+      "kind": "excavator",
+      "route": "yard-loop",
+      "direction": 1,
+      "speed": 1.5,
+      "startT": 0.88,
+      "stops": [
+        { "t": 0.92, "duration": 14, "task": "dig" },
+        { "t": 0.46, "duration": 10, "task": "dig" }
+      ]
+    },
+    {
+      "id": "mobilecrane-1",
+      "kind": "mobileCrane",
+      "route": "ring",
+      "lane": "outer",
+      "direction": -1,
+      "speed": 3.6,
+      "startT": 0.35,
+      "stops": [{ "t": 0.72, "duration": 13, "task": "hoist" }]
+    },
+    {
+      "id": "pickup-1",
+      "kind": "pickup",
+      "route": "ring",
+      "lane": "outer",
+      "direction": 1,
+      "speed": 7.0,
+      "startT": 0.78
+    }
+  ],
+  "routes": {
+    "yard-loop": {
+      "closed": true,
+      "points": [
+        [0, 17], [8, 14], [16, 12], [24, 13.5], [30, 8],
+        [30, -3], [24, -11], [16, -13.5], [8, -17], [0, -18],
+        [-8, -17], [-16, -14], [-22, -8], [-24, 3], [-18, 11], [-8, 15]
+      ]
+    }
+  },
+  "characters": {
+    "count": 10,
+    "roles": [
+      { "role": "foreman", "weight": 1 },
+      { "role": "mason", "weight": 3 },
+      { "role": "rebar", "weight": 2 },
+      { "role": "craneSignal", "weight": 1 },
+      { "role": "driver", "weight": 1 },
+      { "role": "surveyor", "weight": 1 },
+      { "role": "electrician", "weight": 1 }
+    ],
+    "tasks": [
+      { "id": "rebar-carry", "label": "搬运钢筋", "from": "rebar-yard", "to": "tower-floor", "duration": 14 },
+      { "id": "slab-pour", "label": "混凝土浇筑", "at": "tower-floor", "duration": 20 },
+      { "id": "masonry", "label": "砌筑外墙", "at": "tower-facade", "duration": 24 },
+      { "id": "signal", "label": "塔吊指挥", "at": "crane-a-signal", "duration": 26 },
+      { "id": "survey", "label": "测量放线", "at": "tower-base", "duration": 18 },
+      { "id": "patrol", "label": "场地巡检", "at": "site-patrol", "duration": 22 },
+      { "id": "material", "label": "材料转运", "from": "material-yard", "to": "tower-base", "duration": 16 },
+      { "id": "wiring", "label": "临时用电", "at": "power-box", "duration": 17 }
+    ],
+    "breakSpot": "break-area",
+    "spawnTags": ["site-entry", "break-area", "material-yard", "rebar-yard", "tower-base"]
+  },
+  "props": {
+    "cones": 22,
+    "barriers": 9,
+    "rebarBundles": 12,
+    "cementPallets": 9,
+    "pallets": 8,
+    "containers": 5,
+    "powerBoxes": 4,
+    "floodlights": 6,
+    "portacabins": 3,
+    "dumpsters": 4,
+    "wheelStops": 12,
+    "brickPallets": 6,
+    "pipeRacks": 5,
+    "ladders": 4,
+    "signs": 6,
+    "puddles": 7
+  },
+  "lights": [
+    { "id": "street-1", "type": "street", "position": [-38, 31.5] },
+    { "id": "street-2", "type": "street", "position": [-12, 35.5] },
+    { "id": "street-3", "type": "street", "position": [14, 35.0] },
+    { "id": "street-4", "type": "street", "position": [40, 22.0] },
+    { "id": "street-5", "type": "street", "position": [42, -10.0] },
+    { "id": "street-6", "type": "street", "position": [20, -32.0] },
+    { "id": "street-7", "type": "street", "position": [-16, -33.5] },
+    { "id": "street-8", "type": "street", "position": [-41, 6.0] }
+  ],
+  "navigation": {
+    "cell": 2,
+    "nodes": [
+      { "id": "site-entry", "position": [0, 17], "tag": "entry" },
+      { "id": "gate-inner", "position": [0, 23], "tag": "entry" },
+      { "id": "spine-s", "position": [0, 12], "tag": "spine" },
+      { "id": "spine-c", "position": [0, 4], "tag": "spine" },
+      { "id": "spine-n", "position": [0, -12], "tag": "spine" },
+      { "id": "west-lane-a", "position": [-14, 10], "tag": "lane" },
+      { "id": "west-lane-b", "position": [-22, 0], "tag": "lane" },
+      { "id": "west-lane-c", "position": [-20, -12], "tag": "lane" },
+      { "id": "east-lane-a", "position": [14, 9], "tag": "lane" },
+      { "id": "east-lane-b", "position": [22, 0], "tag": "lane" },
+      { "id": "east-lane-c", "position": [22, -12], "tag": "lane" },
+      { "id": "north-lane", "position": [0, -20], "tag": "lane" },
+      { "id": "tower-base", "position": [0, 6.5], "tag": "work", "workSpot": true },
+      { "id": "tower-door-w", "position": [-11.5, 8], "tag": "work" },
+      { "id": "tower-door-e", "position": [11.5, 8], "tag": "work" },
+      { "id": "tower-floor", "position": [-6, 10.5], "tag": "work", "workSpot": true },
+      { "id": "tower-facade", "position": [11.0, 4.0], "tag": "work", "workSpot": true },
+      { "id": "crane-a-signal", "position": [-11.5, -11.5], "tag": "work", "workSpot": true },
+      { "id": "crane-a-base", "position": [-14.5, -13.0], "tag": "work" },
+      { "id": "rebar-yard", "position": [27, -3], "tag": "storage", "workSpot": true },
+      { "id": "rebar-yard-2", "position": [30, -8], "tag": "storage" },
+      { "id": "material-yard", "position": [-27, -6], "tag": "storage", "workSpot": true },
+      { "id": "material-yard-2", "position": [-29, -12], "tag": "storage" },
+      { "id": "power-box", "position": [12.5, 12.5], "tag": "work", "workSpot": true },
+      { "id": "break-area", "position": [-22, 12], "tag": "rest", "workSpot": true },
+      { "id": "office-door", "position": [-26, 16], "tag": "rest" },
+      { "id": "wash-point", "position": [22, -18], "tag": "work", "workSpot": true },
+      { "id": "podium-walk", "position": [-15, 10], "tag": "work", "workSpot": true },
+      { "id": "podium-north", "position": [-18, -7], "tag": "work" },
+      { "id": "parking-walk", "position": [-27, 12], "tag": "rest" },
+      { "id": "inspector-1", "position": [6, -14], "tag": "work", "workSpot": true },
+      { "id": "inspector-2", "position": [-6, -16], "tag": "work", "workSpot": true }
+    ],
+    "extraEdges": [
+      ["site-entry", "spine-s"], ["gate-inner", "site-entry"], ["spine-s", "spine-c"],
+      ["spine-c", "spine-n"], ["spine-s", "west-lane-a"], ["spine-s", "east-lane-a"],
+      ["west-lane-a", "west-lane-b"], ["west-lane-b", "west-lane-c"],
+      ["east-lane-a", "east-lane-b"], ["east-lane-b", "east-lane-c"],
+      ["west-lane-c", "north-lane"], ["east-lane-c", "north-lane"],
+      ["spine-n", "north-lane"], ["tower-base", "spine-c"], ["tower-door-w", "spine-c"],
+      ["tower-door-e", "spine-c"], ["tower-floor", "tower-base"], ["tower-facade", "tower-base"],
+      ["crane-a-signal", "tower-base"], ["crane-a-base", "crane-a-signal"],
+      ["rebar-yard", "east-lane-b"], ["rebar-yard-2", "rebar-yard"], ["rebar-yard", "east-lane-c"],
+      ["material-yard", "west-lane-b"], ["material-yard-2", "material-yard"],
+      ["power-box", "east-lane-a"], ["break-area", "west-lane-a"], ["office-door", "break-area"],
+      ["wash-point", "east-lane-c"], ["podium-walk", "west-lane-a"], ["podium-north", "west-lane-c"],
+      ["parking-walk", "break-area"], ["inspector-1", "north-lane"], ["inspector-2", "north-lane"],
+      ["inspector-1", "east-lane-c"], ["inspector-2", "west-lane-c"], ["tower-facade", "tower-door-e"],
+      ["podium-walk", "tower-door-w"], ["gate-inner", "site-entry"]
+    ]
+  },
+  "debug": {
+    "showRoadGraph": true,
+    "showWaypoints": true,
+    "showPaths": true,
+    "showTaskLabels": true
+  }
+}

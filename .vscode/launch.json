@@ -1,0 +1,61 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "▶ 启动沙盘服务器 (5173)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tools/server.mjs",
+      "args": ["--port", "5173"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "autoAttachChildProcesses": false,
+      "serverReadyAction": {
+        "pattern": "http://(127\\.0\\.0\\.1|localhost):(\\d+)",
+        "uriFormat": "http://127.0.0.1:%s",
+        "action": "openExternally"
+      }
+    },
+    {
+      "name": "🧪 无头自检 (38 项断言)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tools/simtest.mjs",
+      "args": ["--seconds", "180", "--assert"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "🎨 渲染链路截图验证",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tools/render-target-capture.mjs",
+      "args": ["--day", "12", "--minute", "660", "--out", ".verify/vscode-capture.png"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "🌗 昼夜光照曲线",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tools/diag-light.mjs",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "▶▶ 服务器 + 自检",
+      "configurations": ["▶ 启动沙盘服务器 (5173)", "🧪 无头自检 (38 项断言)"],
+      "stopAll": false
+    }
+  ]
+}

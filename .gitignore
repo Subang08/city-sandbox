@@ -1,0 +1,25 @@
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+
+# ---- Vendored build output (regenerate with: npm run vendor) ----
+# three.js is copied from node_modules into public/vendor by `npm run vendor`.
+# Keep it ignored so the repository stays small; run the script after clone.
+public/vendor/
+
+# ---- Verification artifacts ----
+.verify/
+*.log
+
+# ---- Editor / OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# NOTE: .vscode/ is intentionally NOT ignored - launch.json, tasks.json and
+# settings.json are part of the deliverable (F5 debugging + Live Server config).

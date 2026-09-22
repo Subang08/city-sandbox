@@ -1,0 +1,34 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    "public/vendor": true
+  },
+  "search.exclude": {
+    "node_modules": true,
+    "public/vendor": true,
+    ".verify": true
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": false,
+  "javascript.preferences.importModuleSpecifierEnding": "js",
+
+  "// Live Server": "独立于 tools/server.mjs 的第二种运行方式。用 5500 端口，避免与 node 服务器抢 5173。",
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.host": "127.0.0.1",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.NoBrowser": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "liveServer.settings.fullReload": true,
+  "liveServer.settings.wait": 200,
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**",
+    ".verify/**",
+    "node_modules/**",
+    "**/*.scss",
+    "**/*.ts",
+    "**/*.map"
+  ],
+  "liveServer.settings.file": "index.html"
+}
