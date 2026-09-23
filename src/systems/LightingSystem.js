@@ -218,8 +218,13 @@ export class LightingSystem {
       sunIntensity: clamp01(elevation * 2 + 0.25),
       haze: lerpNum(a.haze, b.haze),
       fogColor: s.fog,
-      fogNear: (this.weatherFogNear ?? 60) * lerp(1, a.fog.near / 100, 0.2),
-      fogFar: (this.weatherFogFar ?? 240) * lerp(1, a.fog.far / 240, 0.2),
+      // lighting.json only defines fog.color, so a.fog.near/far are undefined here.
+      // Without these fallbacks the multiplier becomes NaN, fogNear/fogFar become
+      // NaN, and smoothstep(NaN, NaN, depth) poisons mix() in the fog chunk — the
+      // whole scene renders black on drivers that propagate NaN (software
+      // rasterisers return 0, which is why it only shows up on real GPUs).
+      fogNear: (this.weatherFogNear ?? 60) * lerp(1, (a.fog.near ?? 100) / 100, 0.2),
+      fogFar: (this.weatherFogFar ?? 240) * lerp(1, (a.fog.far ?? 240) / 240, 0.2),
       environmentIntensity: lerp(0.25, 0.95, clamp01(elevation * 1.6 + 0.3)) * (this.weatherEnvScale ?? 1),
     });
 

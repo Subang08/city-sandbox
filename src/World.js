@@ -529,8 +529,17 @@ export class World {
     if (this.renderer) {
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, preset.pixelRatio || 1.5));
       this.renderer.shadowMap.enabled = preset.shadows !== false;
-      if (this.lighting.sun.shadow.mapSize.width !== preset.shadowMap) {
-        this.lighting.sun.shadow.mapSize.set(preset.shadowMap, preset.shadowMap);
+      // Only resize the shadow map when the caller actually asked for a size. A
+      // partial preset (e.g. { pixelRatio, shadows: true }) leaves
+      // preset.shadowMap undefined, and writing that into mapSize zeroes the
+      // shadow render target. The framebuffer is then incomplete, the depth
+      // texture never renders, and on real GPUs every lit surface samples as
+      // fully shadowed — the whole scene turns black while the unlit sky dome
+      // survives. Software rasterisers tolerate it, so it only shows up on real
+      // hardware.
+      const shadowMapSize = Number(preset.shadowMap);
+      if (Number.isFinite(shadowMapSize) && shadowMapSize > 0 && this.lighting.sun.shadow.mapSize.width !== shadowMapSize) {
+        this.lighting.sun.shadow.mapSize.set(shadowMapSize, shadowMapSize);
         if (this.lighting.sun.shadow.map) {
           this.lighting.sun.shadow.map.dispose();
           this.lighting.sun.shadow.map = null;
