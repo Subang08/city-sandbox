@@ -242,3 +242,5 @@ node tools/server.mjs --port 5173                      # 静态服务器
 打开 `?debug=1` 后**调试面板会显示 GPU 型号与着色器编译状态**；若某材质在当前驱动上编译失败，
 页面顶部会弹出红色告警并打印 GPU 信息，而不是静默黑屏。可用 `?shadows=0&env=0&sky=off` 逐项旁路定位。
 
+
+<!-- push capability verified: 2026-09-23 10:18:08 -->
